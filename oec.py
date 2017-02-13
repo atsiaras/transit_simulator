@@ -48,6 +48,7 @@ def oec():
             w.close()
 
         except IOError:
+            print 'Updating OEC failed.'
             pass
 
     return data_base_file_path

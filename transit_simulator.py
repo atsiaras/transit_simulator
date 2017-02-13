@@ -175,6 +175,7 @@ def transit_simulator():
     # set progress variables, useful for updating the window
 
     update_planet = BooleanVar(root, value=True)
+    update_planet_list = BooleanVar(root, value=True)
     open_root2 = BooleanVar(root, value=False)
 
     # create the plot in the additional window
@@ -236,23 +237,39 @@ def transit_simulator():
     planet_entry = ttk.Combobox(root, textvariable=planet, state='readonly')
     planet_search_entry = Entry(root, textvariable=planet_search)
 
+    search_planet_button = Button(root, text='SEARCH')
+
     plot_button = Button(root, text='PLOT')
 
     exit_transit_simulator_button = Button(root, text='EXIT')
 
     # define the function that updates the window
 
-    def update_window(event):
+    def update_window(*event):
 
         if not event:
-            return 0
+            pass
 
-        if isinstance(catalogue.searchPlanet(planet_search.get()), list):
-            planet_entry['values'] = tuple([ppp.name for ppp in catalogue.searchPlanet(planet_search.get())])
-        elif catalogue.searchPlanet(planet_search.get()):
-            planet_entry['values'] = tuple([catalogue.searchPlanet(planet_search.get()).name])
-        else:
-            planet_entry['values'] = tuple([])
+        if update_planet_list.get():
+
+            if isinstance(catalogue.searchPlanet(planet_search.get()), list):
+                test_sample = []
+                for test_planet in catalogue.searchPlanet(planet_search.get()):
+                    if test_planet.isTransiting:
+                        test_sample.append(test_planet)
+                planet_entry['values'] = tuple([ppp.name for ppp in test_sample])
+            elif catalogue.searchPlanet(planet_search.get()):
+                planet_entry['values'] = tuple([catalogue.searchPlanet(planet_search.get()).name])
+            else:
+                planet_entry['values'] = tuple([])
+
+            if len(planet_entry['values']) == 1:
+                planet.set(planet_entry['values'][0])
+                update_planet.set(True)
+            else:
+                planet.set('Choose Planet')
+
+            update_planet_list.set(False)
 
         if update_planet.get():
 
@@ -386,7 +403,7 @@ def transit_simulator():
 
         canvas.draw()
 
-    update_window('a')
+    update_window()
 
     # define actions for the different buttons, including calls to the function that updates the window
 
@@ -396,12 +413,17 @@ def transit_simulator():
             return 0
 
         update_planet.set(True)
-        update_window('a')
+        update_window()
+
+    def search_planet():
+
+        update_planet_list.set(True)
+        update_window()
 
     def plot():
 
         open_root2.set(True)
-        update_window('a')
+        update_window()
 
         root2.deiconify()
 
@@ -412,7 +434,7 @@ def transit_simulator():
     # connect actions to widgets
 
     planet_entry.bind('<<ComboboxSelected>>', choose_planet)
-    planet_search_entry.bind(sequence='<KeyRelease>', func=update_window)
+    # planet_search_entry.bind(sequence='<KeyRelease>', func=update_window)
     phot_filter_entry.bind("<ButtonRelease-1>", update_window)
     metallicity_entry.bind("<ButtonRelease-1>", update_window)
     temperature_entry.bind("<ButtonRelease-1>", update_window)
@@ -424,6 +446,7 @@ def transit_simulator():
     eccentricity_entry.bind("<ButtonRelease-1>", update_window)
     periastron_entry.bind("<ButtonRelease-1>", update_window)
 
+    search_planet_button['command'] = search_planet
     plot_button['command'] = plot
     exit_transit_simulator_button['command'] = exit_transit_simulator
 
@@ -438,8 +461,8 @@ def transit_simulator():
         [[logg_label, 2], [logg_entry, 3]],
         [[planet_label, 1]],
         [[planet_search_entry, 1], [period_label, 2], [period_entry, 3]],
-        [[planet_entry, 1]],
-        [[rp_over_rs_label, 2], [rp_over_rs_entry, 3]],
+        [[search_planet_button, 1]],
+        [[planet_entry, 1], [rp_over_rs_label, 2], [rp_over_rs_entry, 3]],
         [[sma_over_rs_label, 2], [sma_over_rs_entry, 3]],
         [[inclination_label, 2], [inclination_entry, 3]],
         [[plot_button, 1], [eccentricity_label, 2], [eccentricity_entry, 3]],
