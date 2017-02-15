@@ -2,4 +2,4 @@
 
 mydir="$(dirname "$BASH_SOURCE")"
 
-python $mydir/osx_setup.py
+python $mydir/setup/osx_setup.py
