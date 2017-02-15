@@ -119,7 +119,7 @@ def integral_centred(limb_darkening_coefficients, rprs, ww1, ww2, method='claret
             - integral_r[method](limb_darkening_coefficients, 0.0)) * np.abs(ww2 - ww1)
 
 
-def integral_plus_core(limb_darkening_coefficients, rprs, z, ww1, ww2, method='claret', precision=0):
+def integral_plus_core(limb_darkening_coefficients, rprs, z, ww1, ww2, method='claret', precision=3):
     if len(z) == 0:
         return z
     rr1 = z * np.cos(ww1) + np.sqrt(np.maximum(rprs ** 2 - (z * np.sin(ww1)) ** 2, 0))
@@ -137,7 +137,7 @@ def integral_plus_core(limb_darkening_coefficients, rprs, z, ww1, ww2, method='c
     return parta + partb + partc + partd
 
 
-def integral_minus_core(limb_darkening_coefficients, rprs, z, ww1, ww2, method='claret', precision=0):
+def integral_minus_core(limb_darkening_coefficients, rprs, z, ww1, ww2, method='claret', precision=3):
     if len(z) == 0:
         return z
     rr1 = z * np.cos(ww1) - np.sqrt(np.maximum(rprs ** 2 - (z * np.sin(ww1)) ** 2, 0))

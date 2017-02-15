@@ -171,6 +171,7 @@ def transit_simulator():
     inclination = DoubleVar(value=0.0)
     eccentricity = DoubleVar(value=0.0)
     periastron = DoubleVar(value=0.0)
+    ascending_node = DoubleVar(value=0.0)
 
     # set progress variables, useful for updating the window
 
@@ -225,6 +226,9 @@ def transit_simulator():
 
     periastron_label = Label(root, text='Periastron (deg)')
     periastron_entry = Scale(root, from_=0, to=360, resolution=1, variable=periastron, orient=HORIZONTAL)
+
+    ascending_node_label = Label(root, text='Ascending node (deg)')
+    ascending_node_entry = Scale(root, from_=0, to=360, resolution=1, variable=ascending_node, orient=HORIZONTAL)
 
     planet_label = Label(root, text='     Planet     ')
     planet_search_entry = Entry(root, textvariable=planet_search)
@@ -313,6 +317,8 @@ def transit_simulator():
             else:
                 periastron.set(90.0)
 
+            ascending_node.set(0.0)
+
             update_planet.set(False)
 
         phot_filter_label_2.configure(text=available_filters[phot_filter.get()])
@@ -344,10 +350,10 @@ def transit_simulator():
                 position = exoplanet_orbit(period.get(), sma_over_rs.get(), eccentricity.get(), inclination.get(),
                                            periastron.get(), 100, time_array)
 
-                time_array = time_array[np.where(np.abs(position[1]) < 1.5)]
+                time_array = time_array[np.where((np.abs(position[1]) < 1.5) & (position[0] > 0))]
 
                 position = exoplanet_orbit(period.get(), sma_over_rs.get(), eccentricity.get(), inclination.get(),
-                                           periastron.get(), 100, time_array)
+                                           periastron.get(), 100, time_array, ww=ascending_node.get())
 
                 transit_light_curve = transit(limb_darkening_coefficients, rp_over_rs.get(), period.get(),
                                               sma_over_rs.get(), eccentricity.get(), inclination.get(),
@@ -444,6 +450,7 @@ def transit_simulator():
     inclination_entry.bind("<ButtonRelease-1>", update_window)
     eccentricity_entry.bind("<ButtonRelease-1>", update_window)
     periastron_entry.bind("<ButtonRelease-1>", update_window)
+    ascending_node_entry.bind("<ButtonRelease-1>", update_window)
 
     search_planet_button['command'] = search_planet
     plot_button['command'] = plot
@@ -466,6 +473,7 @@ def transit_simulator():
         [[inclination_label, 2], [inclination_entry, 3]],
         [[plot_button, 1], [eccentricity_label, 2], [eccentricity_entry, 3]],
         [[exit_transit_simulator_button, 1], [periastron_label, 2], [periastron_entry, 3]],
+        [[ascending_node_label, 2], [ascending_node_entry, 3]],
         [],
     ])
 
