@@ -227,6 +227,7 @@ def transit_simulator():
     periastron_entry = Scale(root, from_=0, to=360, resolution=1, variable=periastron, orient=HORIZONTAL)
 
     planet_label = Label(root, text='     Planet     ')
+    planet_search_entry = Entry(root, textvariable=planet_search)
     combostyle = ttk.Style()
     combostyle.theme_create('combostyle', parent='alt',
                             settings={'TCombobox': {'configure':
@@ -235,7 +236,6 @@ def transit_simulator():
                                                      'background': 'white'}}})
     combostyle.theme_use('combostyle')
     planet_entry = ttk.Combobox(root, textvariable=planet, state='readonly')
-    planet_search_entry = Entry(root, textvariable=planet_search)
 
     search_planet_button = Button(root, text='SEARCH')
 
@@ -434,7 +434,6 @@ def transit_simulator():
     # connect actions to widgets
 
     planet_entry.bind('<<ComboboxSelected>>', choose_planet)
-    # planet_search_entry.bind(sequence='<KeyRelease>', func=update_window)
     phot_filter_entry.bind("<ButtonRelease-1>", update_window)
     metallicity_entry.bind("<ButtonRelease-1>", update_window)
     temperature_entry.bind("<ButtonRelease-1>", update_window)
