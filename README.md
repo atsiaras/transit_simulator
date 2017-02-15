@@ -10,7 +10,6 @@ by double-click on the command file.
 
 Python 2.7 required as well as the packages below:
 
-gzip *
 
 numpy *
 
