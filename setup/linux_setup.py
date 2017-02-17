@@ -3,11 +3,11 @@ import shutil
 
 app = 'transit_simulator'
 
-current_app_dir = os.path.join(os.path.split(os.path.dirname(__file__))[0], app)
+current_app_dir = os.path.join(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0], app)
 app_dir = os.path.join(os.path.expanduser('~'), app)
 
-test_shortcut = os.path.join(os.path.dirname(__file__), 'run.command')
-current_shortcut = os.path.join(os.path.dirname(__file__), app + '.sh')
+test_shortcut = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'run.command')
+current_shortcut = os.path.join(os.path.abspath(os.path.dirname(__file__)), app + '.sh')
 shortcut = os.path.join(os.path.expanduser('~'), 'Desktop', app + '.sh')
 
 # install to home
