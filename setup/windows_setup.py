@@ -27,3 +27,6 @@ w.write('python ' + app_dir)
 w.close()
 
 shutil.move(current_shortcut, shortcut)
+
+print '\n'
+raw_input('Installation completed. Press enter to exit.')
