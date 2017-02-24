@@ -23,26 +23,26 @@ def tri_linear(x, y, z, x0, x1, y0, y1, z0, z1, v000, v100, v010, v001, v101, v0
     return c0 + c1 * dx + c2 * dy + c3 * dz + c4 * dx * dy + c5 * dy * dz + c6 * dz * dx + c7 * dx * dy * dz
 
 
-def clablimb(logg, effective_temperature, metallicity, phot_filter, stellar_model='ATLAS'):
+def clablimb(stellar_logg, stellar_temperature, stellar_metallicity, photometric_filter, stellar_model='ATLAS'):
 
-    data_file = glob.glob(os.path.join(data_base_location, '*_' + stellar_model + '_' + phot_filter + '.txt'))[0]
+    data_file = glob.glob(os.path.join(data_base_location, '*_' + stellar_model + '_' + photometric_filter + '.txt'))[0]
     data = np.loadtxt(data_file, usecols=[0, 1, 2, 3, 4, 5, 6, 7], unpack=True)
 
     x = np.unique(data[0])
     y = np.unique(data[1])
     z = np.unique(data[2])
 
-    yin = float(effective_temperature)
-    zin = float(metallicity)
-    xin = float(logg)
+    yin = float(stellar_temperature)
+    zin = float(stellar_metallicity)
+    xin = float(stellar_logg)
 
-    test = np.argmin(np.abs(xin - x))
+    test = np.argmin(np.abs(np.ones_like(x) * xin - x))
     xmin = x[max(0, test - 1)]
     xmax = x[min(len(x) - 1, test + 1)]
-    test = np.argmin(np.abs(yin - y))
+    test = np.argmin(np.abs(np.ones_like(y) * yin - y))
     ymin = y[max(0, test - 1)]
     ymax = y[min(len(y) - 1, test + 1)]
-    test = np.argmin(np.abs(zin - z))
+    test = np.argmin(np.abs(np.ones_like(z) * zin - z))
     zmin = z[max(0, test - 1)]
     zmax = z[min(len(z) - 1, test + 1)]
 
@@ -65,10 +65,3 @@ def clablimb(logg, effective_temperature, metallicity, phot_filter, stellar_mode
         final_coefficients.append(res)
 
     return np.array(final_coefficients)
-
-
-
-
-
-
-
