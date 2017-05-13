@@ -44,6 +44,6 @@ Double-click on the command file created in your Desktop.
 
 # Updates from version 1.0
 
-* Use the updated version of the PyLightcurve package (1.1.0). Important new feature: tri-linear interpolation for the 
+* Use the updated version of the PyLightcurve package (1.1). Important new feature: tri-linear interpolation for the 
 calculation of the limb darkening coefficients on the tables provided by Claret and Bloeman 2012 (only the 4 non-linear 
 coefficients (Claret 2002) are currently available).
