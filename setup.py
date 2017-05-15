@@ -6,7 +6,7 @@ import glob
 name = 'transit_simulator'
 description = 'HOlomon Photometry Software'
 url = 'https://github.com/atsiaras/transit_simulator'
-install_requires = ['matplotlib', 'numpy', 'astropy', 'quantities']
+install_requires = ['matplotlib', 'numpy', 'exodata', 'emcee', 'seaborn']
 
 os.chdir(os.path.abspath(os.path.dirname(__file__)))
 
