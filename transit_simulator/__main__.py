@@ -12,7 +12,7 @@ matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasBase, FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.backend_bases import key_press_handler, MouseEvent
 
-import thirdparty_pylightcurve as plc
+import pylightcurve as plc
 
 
 def initialise_window(window, window_name, windows_to_hide, windows_to_close, exit_python):

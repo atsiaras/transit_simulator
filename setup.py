@@ -4,9 +4,9 @@ import os
 import glob
 
 name = 'transit_simulator'
-description = 'HOlomon Photometry Software'
+description = 'Graphic interface for transit visualisation'
 url = 'https://github.com/atsiaras/transit_simulator'
-install_requires = ['matplotlib', 'numpy', 'exodata', 'emcee', 'seaborn']
+install_requires = ['pylightcurve']
 
 os.chdir(os.path.abspath(os.path.dirname(__file__)))
 
@@ -21,7 +21,7 @@ for x in glob.glob(os.path.join(name, '*')):
     if x[-2:] != 'py':
         files_to_include.append(os.path.join(name, os.path.split(x)[1]))
 
-files_to_include.append('readme.md')
+files_to_include.append('README.md')
 files_to_include.append('LICENSE')
 
 w = open('MANIFEST.in', 'w')
@@ -33,7 +33,7 @@ for i in files_to_include:
 
 w.close()
 
-with codecs.open('readme.md', encoding='utf-8') as f:
+with codecs.open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
 version = ' '
