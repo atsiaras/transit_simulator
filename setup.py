@@ -6,7 +6,7 @@ import glob
 name = 'transit_simulator'
 description = 'Graphic interface for transit visualisation'
 url = 'https://github.com/atsiaras/transit_simulator'
-install_requires = ['pylightcurve']
+install_requires = ['matplotlib', 'numpy', 'pylightcurve']
 
 os.chdir(os.path.abspath(os.path.dirname(__file__)))
 
