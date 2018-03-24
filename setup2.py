@@ -1,11 +1,9 @@
+from __future__ import absolute_import
 import platform
 import os
+from transit_simulator import __get_abspath__
 
 name = 'transit_simulator'
-
-os.chdir(os.path.abspath(os.path.dirname(__file__)))
-
-from transit_simulator import __get_abspath__
 
 app_dir = __get_abspath__()
 system = platform.system()
